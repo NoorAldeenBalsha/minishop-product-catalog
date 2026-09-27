@@ -1,0 +1,37 @@
+[
+    {
+        "id": "1",
+        "type": "physical",
+        "name": "IPhone 13 Pro Max",
+        "price": 500,
+        "category": "Mobile",
+        "createdAt": "2026-09-26 19:01:48",
+        "discountType": "percentage",
+        "discountValue": 10,
+        "stockQuantity": 5,
+        "weightInGrams": 500
+    },
+    {
+        "id": "3",
+        "type": "physical",
+        "name": "Asus Tuf GTX 1650 ti \/ RAM 12\/ 512 SSD",
+        "price": 450,
+        "category": "Laptop",
+        "createdAt": "2026-09-27 11:27:18",
+        "discountType": "fixed",
+        "discountValue": 22,
+        "stockQuantity": 10,
+        "weightInGrams": 700
+    },
+    {
+        "id": "4",
+        "type": "digital",
+        "name": "PSN Card 50 USD",
+        "price": 50,
+        "category": "Gift Cards",
+        "createdAt": "2026-09-27 20:08:26",
+        "discountType": "percentage",
+        "discountValue": 10,
+        "downloadUrl": "https:\/\/minishop.com\/downloads\/psn-50-code.com"
+    }
+]
