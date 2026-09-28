@@ -11,45 +11,34 @@ class PercentageDiscount implements DiscountInterface
 
     private float $percentage;
 
-    // __construct: Magic Method Called Automatically Upon Object Creation With New.
-    public function __construct(float $percentage)
-    {
+    public function __construct(float $percentage) {
         $this->setPercentage($percentage);
     }
 
-    private function setPercentage(float $percentage): void
-    {
+    private function setPercentage(float $percentage): void {
         if ($percentage < self::MIN_PERCENTAGE || $percentage > self::MAX_PERCENTAGE) {
             throw new InvalidArgumentException("Error: Percentage discount must be between 1% and 70%.");
         }
-
         $this->percentage = $percentage;
     }
 
-    public function __invoke(float $originalPrice): float
-    {
+    public function __invoke(float $originalPrice): float {
         if ($originalPrice <= 0) {
             throw new InvalidArgumentException("Error: Product price must be greater than zero.");
         }
-
         $discountValue = $originalPrice * ($this->percentage / 100);
-
-        // round: Rounds A Float Number To A Specified Precision.
         return round($originalPrice - $discountValue, 2);
-        // This Function Is From https://www.php.net/manual/en/function.round.php
     }
 
-    public function getType(): string
-    {
+    public function getType(): string {
         return 'percentage';
     }
 
-    public function getValue(): float
-    {
+    public function getValue(): float {
         return $this->percentage;
     }
 
-    public function __toString(): string
-    {return $this->percentage . "% OFF";
+    public function __toString(): string {
+        return $this->percentage . "% OFF";
     }
 }

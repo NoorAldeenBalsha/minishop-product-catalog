@@ -25,26 +25,21 @@ class PhysicalProduct extends Product
         $this->setWeightInGrams($weightInGrams);
     }
 
-    public function setStockQuantity(int $stockQuantity): void
-    {
+    public function setStockQuantity(int $stockQuantity): void {
         if ($stockQuantity < 0) {
             throw new InvalidArgumentException("Error: Stock quantity cannot be less than zero.");
         }
-
         $this->stockQuantity = $stockQuantity;
     }
 
-    public function setWeightInGrams(float $weightInGrams): void
-    {
+    public function setWeightInGrams(float $weightInGrams): void {
         if ($weightInGrams <= 0) {
             throw new InvalidArgumentException("Error: Weight in grams must be greater than zero.");
         }
-
         $this->weightInGrams = round($weightInGrams, 2);
     }
 
-    public function sellStock(int $quantity): void
-    {
+    public function sellStock(int $quantity): void {
         if ($quantity <= 0) {
             throw new InvalidArgumentException("Error: Quantity to sell must be greater than zero.");
         }
@@ -58,34 +53,28 @@ class PhysicalProduct extends Product
         $this->stockQuantity -= $quantity;
     }
 
-    public function getStockQuantity(): int
-    {
+    public function getStockQuantity(): int {
         return $this->stockQuantity;
     }
 
-    public function getWeightInGrams(): float
-    {
+    public function getWeightInGrams(): float {
         return $this->weightInGrams;
     }
 
-    public function getType(): string
-    {
+    public function getType(): string {
         return 'physical';
     }
 
-    public function calculateShippingCost(): float
-    {
+    public function calculateShippingCost(): float {
         return round($this->weightInGrams * self::SHIPPING_RATE_PER_GRAM, 2);
     }
 
-    protected function getExtraDisplayInfo(): string
-    {
+    protected function getExtraDisplayInfo(): string {
         return "Stock Quantity:   " . $this->stockQuantity . " units" . PHP_EOL
             . "Weight:           " . $this->weightInGrams . "g";
     }
 
-    public function toArray(): array
-    {
+    public function toArray(): array {
         // array_merge: Merges the elements of one or more arrays together.
         return array_merge($this->getCommonArray(), [
             'stockQuantity' => $this->stockQuantity,

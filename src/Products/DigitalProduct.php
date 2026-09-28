@@ -21,8 +21,7 @@ class DigitalProduct extends Product
         $this->setDownloadUrl($downloadUrl);
     }
 
-    public function setDownloadUrl(string $downloadUrl): void
-    {
+    public function setDownloadUrl(string $downloadUrl): void {
         $cleanUrl = trim($downloadUrl);
 
         // filter_var: Filters a variable with a specified validation filter.
@@ -33,27 +32,24 @@ class DigitalProduct extends Product
         $this->downloadUrl = $cleanUrl;
     }
 
-    public function getDownloadUrl(): string
-    {
+    public function getDownloadUrl(): string {
         return $this->downloadUrl;
     }
 
-    public function getType(): string
-    {
+    public function getType(): string {
         return 'digital';
-    }public function calculateShippingCost(): float
-    {
+    }
+
+    public function calculateShippingCost(): float {
         return 0.0;
     }
 
-    protected function getExtraDisplayInfo(): string
-    {
+    protected function getExtraDisplayInfo(): string {
         return "Availability:     Always Available (Digital)" . PHP_EOL
             . "Download Link:    " . $this->downloadUrl;
     }
 
-    public function toArray(): array
-    {
+    public function toArray(): array {
         return array_merge($this->getCommonArray(), [
             'downloadUrl' => $this->downloadUrl,
         ]);

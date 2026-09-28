@@ -2,72 +2,50 @@
 
 A command-line product catalog management application built with Pure PHP (8.2+) using Object-Oriented Programming (OOP) principles, strict type checking, and JSON file persistence without any external frameworks or databases.
 
-## Overview
+# Overview
 
 MiniShop CLI Product Catalog is designed to help store owners manage their inventory directly from the terminal. It supports multiple product types, flexible discount rules, strict business validation, automatic operation logging, and persistent JSON storage that preserves data across sessions.
 
-## Features
+# Features
 
-- **Five Core Catalog Operations**:
-  1. **Add Product**: Add a new Physical or Digital product to the catalog.
-  2. **List Products**: Display all products in formatted, human-readable terminal cards showing original price, applied discount, final price after discount, and shipping cost.
-  3. **Find Product**: Retrieve a single product using its unique ID.
-  4. **Update Product**: Modify existing product details, pricing, discount, stock, weight, or download URL.
-  5. **Delete Product**: Remove a product permanently from the catalog.
-- **Product Types (Inheritance & Polymorphism)**:
-  - **Physical Products**: Have stock quantity and weight in grams, calculate shipping fees based on weight, and prevent selling quantities greater than available stock.
-  - **Digital Products**: Always available in stock, have zero shipping fees, and require a valid download URL.
-- **Discount System (Composition & Interfaces)**:
-  - **Percentage Discount**: Applies a percentage off between 1% and 70%.
-  - **Fixed Discount**: Deducts a fixed dollar amount without exceeding the product price.
-  - **No Discount**: Keeps the original product price unchanged.
-- **Business Rules & Encapsulation**:
+- # Five Core Catalog Operations:
+  1. Add Product: Add a new Physical or Digital product to the catalog.
+  2. List Products: Display all products in formatted, human-readable terminal cards showing original price, applied discount, final price after discount, and shipping cost.
+  3. Find Product: Retrieve a single product using its unique ID.
+  4. Update Product: Modify existing product details, pricing, discount, stock, weight, or download URL.
+  5. Delete Product: Remove a product permanently from the catalog.
+- # Product Types (Inheritance & Polymorphism):
+  - Physical Products: Have stock quantity and weight in grams, calculate shipping fees based on weight, and prevent selling quantities greater than available stock.
+  - Digital Products: Always available in stock, have zero shipping fees, and require a valid download URL.
+- # Discount System (Composition & Interfaces):
+  - Percentage Discount: Applies a percentage off between 1% and 70%.
+  - Fixed Discount: Deducts a fixed dollar amount without exceeding the product price.
+  - No Discount: Keeps the original product price unchanged.
+- # Business Rules & Encapsulation:
   - All class properties are `private` and protected against invalid external modification.
   - Product price must be greater than zero.
   - Product name cannot be empty or shorter than 3 characters.
   - Stock quantity cannot drop below zero.
   - Product IDs are strictly unique across the catalog.
   - Digital product download links must be valid URLs.
-- **Fault-Tolerant JSON Persistence**:
+- # Fault-Tolerant JSON Persistence:
   - Saves all catalog data in a single `products.json` file.
   - Safely handles missing, empty, or corrupted JSON files on startup without crashing.
-- **Reusable Operation Logging (`Trait`)**:
+- # Reusable Operation Logging (`Trait`):
   - Logs every `ADD`, `UPDATE`, and `DELETE` operation with its exact timestamp in `operations.log`.
 
-## Project Structure
-
-- `index.php` - Interactive terminal (CLI) entry point and user menu.
-- `README.md` - Project documentation and usage guide.
-- `FUNCTIONS.md` - Documentation of all PHP built-in functions and magic methods used.
-- `DESIGN.md` - Architectural decisions and OOP design answers.
-- `src/Traits/Logger.php` - Reusable logging trait for recording system operations with timestamps.
-- `src/Discounts/DiscountInterface.php` - Contract for all discount types using `__invoke` and `__toString`.
-- `src/Discounts/NoDiscount.php` - Default no-discount implementation.
-- `src/Discounts/PercentageDiscount.php` - Percentage-based discount (1% - 70%).
-- `src/Discounts/FixedDiscount.php` - Fixed-amount discount validated against product price.
-- `src/Products/Product.php` - Abstract base class encapsulating shared product properties and business rules.
-- `src/Products/PhysicalProduct.php` - Physical product class with stock management and weight-based shipping.
-- `src/Products/DigitalProduct.php` - Digital product class with URL validation and free shipping.
-- `src/Storage/StorageInterface.php` - Storage contract decoupling catalog logic from persistence.
-- `src/Storage/JsonStorage.php` - JSON file storage implementation with error handling.
-- `src/Catalog/ProductCatalog.php` - Main service managing CRUD operations, storage sync, and logging.
-
-## Technical Requirements
+# Technical Requirements
 
 - PHP 8.2 or higher.
 - Strict types enabled (`declare(strict_types=1);`) across all files.
 - Complete parameter and return type hints.
-- Zero external dependencies (No Composer, no frameworks, no database).
 
-## How to Run
+# How to Run
 
-1. Open your terminal and navigate to the project root folder:
-   `cd minishop-catalog`
-
-2. Start the interactive CLI application:
+1. Start the interactive CLI application:
    `php index.php`
 
-3. Follow the on-screen menu options:
+2. Follow the on-screen menu options:
    - Enter `1` to add a new product (Physical or Digital).
    - Enter `2` to view all products in the catalog.
    - Enter `3` to search for a product by its ID.

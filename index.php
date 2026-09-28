@@ -5,12 +5,10 @@ declare(strict_types=1);
 require_once __DIR__  . '/src/Storage/JsonStorage.php';
 require_once __DIR__ . '/src/Catalog/ProductCatalog.php';
 
-function readInput(string $prompt): string
-{
+function readInput(string $prompt): string {
     echo $prompt;
 
     // fgets: Reads a line of input from the standard input stream (terminal).
-    // This Function From https://www.php.net/manual/en/function.fgets.php
     $line = fgets(STDIN);
     if ($line === false) {
         return '';
@@ -19,12 +17,10 @@ function readInput(string $prompt): string
     return trim($line);
 }
 
-function readFloatInput(string $prompt): float
-{
+function readFloatInput(string $prompt): float {
     $input = readInput($prompt);
 
     // is_numeric: Checks whether a variable is a number or a numeric string.
-    // This Function From https://www.php.net/manual/en/function.is-numeric.php
     if (!is_numeric($input)) {
         throw new InvalidArgumentException("Error: Expected a valid numeric value.");
     }
@@ -32,8 +28,7 @@ function readFloatInput(string $prompt): float
     return (float)$input;
 }
 
-function readIntInput(string $prompt): int
-{
+function readIntInput(string $prompt): int {
     $input = readInput($prompt);
     if (!is_numeric($input)) {
         throw new InvalidArgumentException("Error: Expected a valid integer value.");
@@ -42,8 +37,7 @@ function readIntInput(string $prompt): int
     return (int)$input;
 }
 
-function promptDiscount(ProductCatalog $catalog): DiscountInterface
-{
+function promptDiscount(ProductCatalog $catalog): DiscountInterface {
     echo "Select Discount Type:" . PHP_EOL;
     echo "  1) No Discount" . PHP_EOL;
     echo "  2) Percentage Discount (1% - 70%)" . PHP_EOL;

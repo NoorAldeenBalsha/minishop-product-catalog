@@ -19,20 +19,16 @@ class ProductCatalog
     private StorageInterface $storage;
     private array $products = [];
 
-    public function __construct(StorageInterface $storage)
-    {
+    public function __construct(StorageInterface $storage) {
         $this->storage = $storage;
         $this->loadProductsFromStorage();
-        // This
     }
 
-    public function addProduct(Product $product): void
-    {
+    public function addProduct(Product $product): void {
         $id = $product->getId();
 
         // array_key_exists: Checks if the given key or index exists in the array.
         if (array_key_exists($id, $this->products)) {
-            // This Function From https://www.php.net/manual/en/function.array-key-exists.php
             throw new InvalidArgumentException("Error: Product ID '" . $id . "' already exists. IDs must be unique.");
         }
 
@@ -41,24 +37,19 @@ class ProductCatalog
         $this->logOperation("ADD", "Added product ID: " . $id . " (" . $product->getName() . ")");
     }
 
-    public function getAllProducts(): array
-    {
+    public function getAllProducts(): array {
         return $this->products;
     }
 
-    public function getProductsCount(): int
-    {
-        // count: Counts all elements in an array.
+    public function getProductsCount(): int {
         return count($this->products);
     }
 
-    public function findProductById(string $id): Product
-    {
+    public function findProductById(string $id): Product {
         $cleanId = trim($id);
         if (!array_key_exists($cleanId, $this->products)) {
             throw new InvalidArgumentException("Error: Product with ID '" . $cleanId . "' was not found.");
         }
-
         return $this->products[$cleanId];
     }
 
@@ -92,8 +83,7 @@ class ProductCatalog
         $this->logOperation("UPDATE", "Updated product ID: " . $product->getId() . " (" . $product->getName() . ")");
     }
 
-    public function deleteProduct(string $id): void
-    {
+    public function deleteProduct(string $id): void {
         $product = $this->findProductById($id);
         $productId = $product->getId();
         $productName = $product->getName();
@@ -103,9 +93,7 @@ class ProductCatalog
         $this->logOperation("DELETE", "Deleted product ID: " . $productId . " (" . $productName . ")");
     }
 
-    public function createDiscountFromInput(string $discountType, float $discountValue): DiscountInterface
-    {
-        // strtolower: Converts a string to lowercase letters.
+    public function createDiscountFromInput(string $discountType, float $discountValue): DiscountInterface {
         $normalizedType = strtolower(trim($discountType));
 
         switch ($normalizedType) {
@@ -119,16 +107,16 @@ class ProductCatalog
         }
     }
 
-    private function saveProductsToStorage(): void
-    {
+    private function saveProductsToStorage(): void {
         $rawList = [];
         foreach ($this->products as $product) {
             $rawList[] = $product->toArray();
         }
 
         $this->storage->saveAll($rawList);
-    }private function loadProductsFromStorage(): void
-    {
+    }
+
+    private function loadProductsFromStorage(): void {
         $rawItems = $this->storage->loadAll();
 
         foreach ($rawItems as $item) {
@@ -146,8 +134,7 @@ class ProductCatalog
         }
     }
 
-    private function reconstructProduct(array $item): Product
-    {
+    private function reconstructProduct(array $item): Product {
         $id = (string)($item['id'] ?? '');
         $type = strtolower((string)($item['type'] ?? ''));
         $name = (string)($item['name'] ?? '');

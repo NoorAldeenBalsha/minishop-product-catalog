@@ -1,23 +1,70 @@
-# جدول الدوال الجاهزة والدوال السحرية المستخدمة في المشروع
+# 1. PHP Built-in Functions
 
-## أولاً: دوال مكتبة PHP الجاهزة (Built-in Functions)
-
-| الاسم | وين استعملتها | شو بتعمل | المصدر |
-| :--- | :--- | :--- | :--- |
-| `date` | في `Logger.php` لتوثيق وقت العملية، وفي `Product.php` لتحديد تاريخ إضافة المنتج | بترجع التاريخ والوقت الحاليين كنص منسق حسب الصيغة يللي بنعطيها ياها | https://www.php.net/manual/en/function.date.php |
-| `file_put_contents` | في `Logger.php` لإضافة سطر السجل، وفي `JsonStorage.php` لحفظ الكتالوج في الملف | بتكتب نص جوات ملف على القرص مباشرة، وإذا الملف مو موجود بتنشؤو | https://www.php.net/manual/en/function.file-put-contents.php |
-| `round` | في `PercentageDiscount.php` و`FixedDiscount.php` و`Product.php` و`PhysicalProduct.php` | بتقرّب الرقم العشري لعدد محدد من الخانات بعد الفاصلة مشان تضل الأسعار دقيقة | https://www.php.net/manual/en/function.round.php |
-| `trim` | في `Product.php` و`DigitalProduct.php` و`JsonStorage.php` و`ProductCatalog.php` و`index.php` | بتحذف المسافات والفراغات الزايدة من أول وآخر النص | https://www.php.net/manual/en/function.trim.php |
-| `strlen` | في `Product.php` داخل دالة `setName` | بتحسب كم حرف بطول النص مشان نتأكد إنو اسم المنتج مو أقصر من 3 أحرف | https://www.php.net/manual/en/function.strlen.php |
-| `array_merge` | في `PhysicalProduct.php` و`DigitalProduct.php` داخل دالة `toArray` | بتدمج مصفوفتين أو أكثر بمصفوفة وحدة (جمعنا فيها بيانات المنتج المشتركة مع الخاصة) | https://www.php.net/manual/en/function.array-merge.php |
-| `filter_var` | في `DigitalProduct.php` داخل دالة `setDownloadUrl` | بتفحص المتغير بفلتر معين لنتأكد إنو رابط التحميل للمنتج الرقمي رابط حقيقي وصالح | https://www.php.net/manual/en/function.filter-var.php |
-| `file_exists` | في `JsonStorage.php` داخل دالة `loadAll` | بتفحص إذا الملف موجود أصلاً على الجهاز قبل ما نحاول نقرأ منو | https://www.php.net/manual/en/function.file-exists.php |
-| `file_get_contents` | في `JsonStorage.php` داخل دالة `loadAll` | بتقرأ محتوى الملف كامل من القرص وبترجعو كنص واحد | https://www.php.net/manual/en/function.file-get-contents.php |
-| `json_decode` | في `JsonStorage.php` داخل دالة `loadAll` | بتفك نص الـ JSON المخزن بالملف وبتحولو لمصفوفة ترابطية بـ PHP | https://www.php.net/manual/en/function.json-decode.php |
-| `is_array` | في `JsonStorage.php` و`ProductCatalog.php` عند تحميل البيانات | بتتأكد إذا المتغير هو مصفوفة فعلية مشان نحمي البرنامج لو كان ملف الـ JSON مكسور | https://www.php.net/manual/en/function.is-array.php |
-| `json_encode` | في `JsonStorage.php` داخل دالة `saveAll` | بتحول مصفوفة بيانات PHP لنص مرتب بصيغة JSON مشان نخزنو بالملف | https://www.php.net/manual/en/function.json-encode.php |
-| `array_key_exists` | في `ProductCatalog.php` عند الإضافة والبحث والتعديل | بتفحص إذا مفتاح معين (مثل معرف المنتج ID) موجود مسبقاً جوات المصفوفة | https://www.php.net/manual/en/function.array-key-exists.php |
-| `count` | في `ProductCatalog.php` داخل دالة `getProductsCount` | بتعد كم عنصر موجود حالياً جوات مصفوفة المنتجات | https://www.php.net/manual/en/function.count.php |
-| `strtolower` | في `ProductCatalog.php` و`index.php` لتوحيد حالة الأحرف | بتحول كل أحرف النص لأحرف صغيرة (small letters) لتسهيل مقارنتها | https://www.php.net/manual/en/function.strtolower.php |
-| `fgets` | في `index.php` داخل دالة `readInput` | بتقرأ سطر كامل بيكتبو المستخدم بالـ Terminal | https://www.php.net/manual/en/function.fgets.php |
-| `is_numeric` | في `index.php` داخل دوال قراءة الأرقام `readFloatInput` و`readIntInput` | بتفحص إذا النص يللي دخلو المستخدم هو رقم صالح قبل ما نحولو لحسابات | https://www.php.net/manual/en/function.is-numeric.php |
+| Name | Where Used | What It Does | Source |=================================================================================================================================
+| `date` | `Logger.php` & `Product.php` -->
+| Formats current date and time as a string | https://www.php.net/manual/en/function.date.php |
+# =================================================================================================================================
+| `file_put_contents` | `Logger.php` & `JsonStorage.php` -->
+| Writes text data directly to a file | https://www.php.net/manual/en/function.file-put-contents.php |
+# =================================================================================================================================
+| `round` | `PercentageDiscount.php` & `FixedDiscount.php` & `Product.php` & `PhysicalProduct.php` -->
+| Rounds a float number to 2 decimal places | https://www.php.net/manual/en/function.round.php |
+# =================================================================================================================================
+| `trim` | `Product.php` & `DigitalProduct.php` & `JsonStorage.php` & `ProductCatalog.php` & `index.php` -->
+| Removes whitespace from both ends of a string | https://www.php.net/manual/en/function.trim.php |
+# =================================================================================================================================
+| `strlen` | `Product.php` -->
+| Returns the length of a string| https://www.php.net/manual/en/function.strlen.php |
+# =================================================================================================================================
+| `array_merge` | `PhysicalProduct.php` & `DigitalProduct.php` -->
+| Combines two or more arrays into one single array | https://www.php.net/manual/en/function.array-merge.php |
+# =================================================================================================================================
+| `filter_var` | `DigitalProduct.php` -->
+| Checks and validates a variable using a specific filter | https://www.php.net/manual/en/function.filter-var.php |
+# =================================================================================================================================
+| `file_exists` | `JsonStorage.php` -->
+| Checks if a file exists on disk | https://www.php.net/manual/en/function.file-exists.php |
+# =================================================================================================================================
+| `file_get_contents` | `JsonStorage.php` -->
+| Reads the entire content of a file from disk and returns string | https://www.php.net/manual/en/function.file-get-contents.php |
+# =================================================================================================================================
+| `json_decode` | `JsonStorage.php` -->
+| Converts a JSON string into a PHP array | https://www.php.net/manual/en/function.json-decode.php |
+# =================================================================================================================================
+| `is_array` | `JsonStorage.php` & `ProductCatalog.php`  -->
+| Checks if a variable is an array | https://www.php.net/manual/en/function.is-array.php |
+# =================================================================================================================================
+| `json_encode` | In `JsonStorage.php` inside the `saveAll` method -->
+| Converts a PHP structure into a JSON string | https://www.php.net/manual/en/function.json-encode.php |
+# =================================================================================================================================
+| `array_key_exists` | `ProductCatalog.php`  -->
+| Checks if a specific key already exists inside an array | https://www.php.net/manual/en/function.array-key-exists.php |
+# =================================================================================================================================
+| `count` | `ProductCatalog.php`-->
+| Counts all elements in an array | https://www.php.net/manual/en/function.count.php |
+# =================================================================================================================================
+| `strtolower` | `ProductCatalog.php` & `index.php`  -->
+|Converts a string to lowercase | https://www.php.net/manual/en/function.strtolower.php |
+# =================================================================================================================================
+| `fgets` | `index.php`  -->
+| Reads a full line of text typed by the user in the terminal | https://www.php.net/manual/en/function.fgets.php |
+# =================================================================================================================================
+| `is_numeric` | `index.php`  -->
+| Checks if a value is a valid number | https://www.php.net/manual/en/function.is-numeric.php |
+# =================================================================================================================================
+| `unset` | `ProductCatalog.php` -->
+| Completely removes a specific element from the array using its key | https://www.php.net/manual/en/function.unset.php |
+# =================================================================================================================================
+| `isset` | `ProductCatalog.php` -->
+| Checks if a variable is set and not null | https://www.php.net/manual/en/function.isset.php |
+# -----------------------------------------------------------------------------------------------------------------------------------
+# 2. PHP Magic Methods
+ 
+| Function Name | Where It Was Used | What It Does | Official Documentation Source |
+# =================================================================================================================================
+| `__invoke` | `DiscountInterface.php` & `FixedDiscount.php` & `NoDiscount.php` & `PercentageDiscount.php` -->
+| Calls discount object like  function to calculate final price |https://www.php.net/manual/en/language.oop5.magic.php#object.invoke|
+# =================================================================================================================================
+| `__toString` | `Product.php` & `DiscountInterface.php` & `FixedDiscount.php` & `NoDiscount.php` & `PercentageDiscount.php` -->
+| Converts the object into a formatted string when printed | https://www.php.net/manual/en/language.oop5.magic.php#object.tostring |
+# -----------------------------------------------------------------------------------------------------------------------------------

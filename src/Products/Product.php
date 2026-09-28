@@ -43,7 +43,6 @@ abstract class Product
         $cleanName = trim($name);
 
         // strlen: Returns the length of a given string.
-        // And This Function From https://www.php.net/manual/en/function.strlen.php
         if (strlen($cleanName) < self::MIN_NAME_LENGTH) {
             throw new InvalidArgumentException("Error: Product name must be at least 3 characters long.");
         }

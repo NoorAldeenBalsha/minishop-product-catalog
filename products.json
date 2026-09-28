@@ -33,5 +33,17 @@
         "discountType": "percentage",
         "discountValue": 10,
         "downloadUrl": "https:\/\/minishop.com\/downloads\/psn-50-code.com"
+    },
+    {
+        "id": "5",
+        "type": "physical",
+        "name": "Samsung S25 Ultra",
+        "price": 600,
+        "category": "Mobile",
+        "createdAt": "2026-09-28 09:12:32",
+        "discountType": "percentage",
+        "discountValue": 5,
+        "stockQuantity": 3,
+        "weightInGrams": 500
     }
 ]
