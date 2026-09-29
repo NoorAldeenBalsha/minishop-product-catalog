@@ -13,7 +13,9 @@ require_once __DIR__ . '\..\Products\PhysicalProduct.php';
 require_once __DIR__ . '\..\Products\DigitalProduct.php';
 
 class ProductCatalog
-{
+{   
+    public const MIN_NAME_LENGTH = 3;
+
     use Logger;
 
     private StorageInterface $storage;
@@ -24,14 +26,25 @@ class ProductCatalog
         $this->loadProductsFromStorage();
     }
 
-    public function addProduct(Product $product): void {
-        $id = $product->getId();
-
+    public function validateNewId(string $id): void{
+        if ($id === '') {
+            throw new InvalidArgumentException("Error: Product ID cannot be empty.");
+        }
         // array_key_exists: Checks if the given key or index exists in the array.
         if (array_key_exists($id, $this->products)) {
             throw new InvalidArgumentException("Error: Product ID '" . $id . "' already exists. IDs must be unique.");
         }
+    }
 
+    public function validateName(string $name): void{
+        // strlen: Returns the length of a given string.
+        if (strlen($name) < self::MIN_NAME_LENGTH) {
+            throw new InvalidArgumentException("Error: Product name must be at least 3 characters long.");
+        }
+    }
+
+    public function addProduct(Product $product): void {
+         $id = $product->getId();
         $this->products[$id] = $product;
         $this->saveProductsToStorage();
         $this->logOperation("ADD", "Added product ID: " . $id . " (" . $product->getName() . ")");

@@ -34,10 +34,10 @@
 # 5. Which Magic Methods did you use, what problem did they solve, and what was the alternative?
 In addition to `__construct`, I used two magic methods:
 `FIRST :` `__toString()` in `Product` and the discount classes:
-   - Problem Solved: Allowed objects to be printed directly in the terminal via `echo \(product;` while automatically embedding the formatted discount description (`"Discount: " .\)this->discount`).
+   - Problem Solved: Allowed objects to be printed directly in the terminal via `echo $product;` while automatically embedding the formatted discount description (`"Discount: "$this->discount`).
    - Alternative without it: Writing a regular method such as `$product->formatAsText()` and calling it manually every time a product or discount is displayed.
 `SECOND :` `__invoke()` in the discount classes (`DiscountInterface`):
-   - Problem Solved: Allowed treating the discount object as a callable function `\(discount(\)price)` that validates discount compatibility with the price and returns the final discounted price in one step.
-   - Alternative without it: Defining a standard method inside the interface such as `\(discount->calculateDiscountedPrice(\)price)`.
+   - Problem Solved: Allowed treating the discount object as a callable function `$discount($price)` that validates discount compatibility with the price and returns the final discounted price in one step.
+   - Alternative without it: Defining a standard method inside the interface such as `$discount->calculateDiscountedPrice($price)`.
 
 # ==================================================================================================================================

@@ -6,8 +6,6 @@ require_once __DIR__ . '\..\Discounts\DiscountInterface.php';
 
 abstract class Product
 {
-    public const MIN_NAME_LENGTH = 3;
-
     private string $id;
     private string $name;
     private float $price;
@@ -31,22 +29,11 @@ abstract class Product
     }
 
     private function setId(string $id): void {
-        // trim: Strips whitespace from the beginning and end of a string.
-        $cleanId = trim($id);
-        if ($cleanId === '') {
-            throw new InvalidArgumentException("Error: Product ID cannot be empty.");
-        }
-        $this->id = $cleanId;
+        $this->id = $id;
     }
 
     public function setName(string $name): void {
-        $cleanName = trim($name);
-
-        // strlen: Returns the length of a given string.
-        if (strlen($cleanName) < self::MIN_NAME_LENGTH) {
-            throw new InvalidArgumentException("Error: Product name must be at least 3 characters long.");
-        }
-        $this->name = $cleanName;
+        $this->name = $name;
     }
 
     public function setCategory(string $category): void {

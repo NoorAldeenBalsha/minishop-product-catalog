@@ -45,5 +45,29 @@
         "discountValue": 5,
         "stockQuantity": 3,
         "weightInGrams": 500
+    },
+    {
+        "id": "6",
+        "type": "physical",
+        "name": "Samsung J5 2016",
+        "price": 70,
+        "category": "Mobile",
+        "createdAt": "2026-09-29 07:21:38",
+        "discountType": "none",
+        "discountValue": 0,
+        "stockQuantity": 1,
+        "weightInGrams": 250
+    },
+    {
+        "id": "7",
+        "type": "physical",
+        "name": "IPhone 11",
+        "price": 150,
+        "category": "Mobile",
+        "createdAt": "2026-09-29 07:23:10",
+        "discountType": "none",
+        "discountValue": 0,
+        "stockQuantity": 1,
+        "weightInGrams": 350
     }
 ]

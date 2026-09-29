@@ -5,6 +5,7 @@ declare(strict_types=1);
 require_once __DIR__  . '/src/Storage/JsonStorage.php';
 require_once __DIR__ . '/src/Catalog/ProductCatalog.php';
 
+// Reads a line of input from the user and trims whitespace.
 function readInput(string $prompt): string {
     echo $prompt;
 
@@ -17,6 +18,7 @@ function readInput(string $prompt): string {
     return trim($line);
 }
 
+// Reads a float input from the user and validates it.
 function readFloatInput(string $prompt): float {
     $input = readInput($prompt);
 
@@ -28,6 +30,7 @@ function readFloatInput(string $prompt): float {
     return (float)$input;
 }
 
+// Reads an integer input from the user and validates it.
 function readIntInput(string $prompt): int {
     $input = readInput($prompt);
     if (!is_numeric($input)) {
@@ -37,6 +40,7 @@ function readIntInput(string $prompt): int {
     return (int)$input;
 }
 
+// Prompt the user to select a discount type and return the corresponding DiscountInterface object.
 function promptDiscount(ProductCatalog $catalog): DiscountInterface {
     echo "Select Discount Type:" . PHP_EOL;
     echo "  1) No Discount" . PHP_EOL;
@@ -45,14 +49,16 @@ function promptDiscount(ProductCatalog $catalog): DiscountInterface {
     $choice = readInput("Enter choice (1-3): ");
 
     switch ($choice) {
+        case '1':
+            return $catalog->createDiscountFromInput('none', 0.0);
         case '2':
             $percent = readFloatInput("Enter discount percentage (1 - 70): ");
             return $catalog->createDiscountFromInput('percentage', $percent);
         case '3':$amount = readFloatInput("Enter fixed discount amount ($): ");
             return $catalog->createDiscountFromInput('fixed', $amount);
-        case '1':
         default:
-            return $catalog->createDiscountFromInput('none', 0.0);
+            echo "Invalid choice. Please try again." . PHP_EOL;
+            return promptDiscount($catalog);
     }
 }
 
@@ -80,10 +86,13 @@ while ($running) {
             case '1':
                 echo PHP_EOL . "--- Add New Product ---" . PHP_EOL;
                 $id = readInput("Product ID: ");
+                $catalog->validateNewId($id); // Validate uniqueness of the ID
                 $name = readInput("Product Name (min 3 chars): ");
+                $catalog->validateName($name); // Validate name length
                 $category = readInput("Category: ");
                 $price = readFloatInput("Price ($): ");
                 $discount = promptDiscount($catalog);
+                $discount($price); // Validate discount against the price
 
                 echo "Product Type:" . PHP_EOL;
                 echo "  1) Physical Product" . PHP_EOL;
@@ -132,35 +141,28 @@ while ($running) {
                 echo "Current Product Details:" . PHP_EOL . $existing . PHP_EOL;
 
                 $newName = readInput("New Name [" . $existing->getName() . "]: ");
-                if ($newName === '') {
-                    $newName = $existing->getName();
-                }
+                $newName = ($newName === '') ? $existing->getName() : $newName;
 
                 $newCategory = readInput("New Category [" . $existing->getCategory() . "]: ");
-                if ($newCategory === '') {
-                    $newCategory = $existing->getCategory();
-                }$priceInput = readInput("New Price [$" . $existing->getPrice() . "]: ");
+                $newCategory = ($newCategory === '') ? $existing->getCategory() : $newCategory;
+
+                $priceInput = readInput("New Price [$" . $existing->getPrice() . "]: ");
                 $newPrice = ($priceInput === '') ? $existing->getPrice() : (float)$priceInput;
 
-                $changeDiscount = strtolower(readInput("Change discount? (y/n): "));
-                $newDiscount = ($changeDiscount === 'y') ? promptDiscount($catalog) : $existing->getDiscount();
+                $changeDiscount = strtolower(readInput("Change discount? (yes/no): "));
+                $newDiscount = ($changeDiscount === 'yes') ? promptDiscount($catalog) : $existing->getDiscount();
 
                 $extra = [];
                 if ($existing instanceof PhysicalProduct) {
                     $stockInput = readInput("New Stock [" . $existing->getStockQuantity() . "]: ");
-                    if ($stockInput !== '') {
-                        $extra['stockQuantity'] = (int)$stockInput;
-                    }
+                    $extra['stockQuantity'] = ($stockInput === '') ? $existing->getStockQuantity() : (int)$stockInput;
 
                     $weightInput = readInput("New Weight in grams [" . $existing->getWeightInGrams() . "]: ");
-                    if ($weightInput !== '') {
-                        $extra['weightInGrams'] = (float)$weightInput;
-                    }
+                    $extra['weightInGrams'] = ($weightInput === '') ? $existing->getWeightInGrams() : (float)$weightInput;
+
                 } elseif ($existing instanceof DigitalProduct) {
                     $urlInput = readInput("New Download URL [" . $existing->getDownloadUrl() . "]: ");
-                    if ($urlInput !== '') {
-                        $extra['downloadUrl'] = $urlInput;
-                    }
+                    $extra['downloadUrl'] = ($urlInput === '') ? $existing->getDownloadUrl() : $urlInput;
                 }
 
                 $catalog->updateProduct($updateId, $newName, $newPrice, $newCategory, $newDiscount, $extra);

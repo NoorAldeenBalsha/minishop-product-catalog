@@ -18,7 +18,6 @@ class FixedDiscount implements DiscountInterface
             throw new InvalidArgumentException("Error: Fixed discount amount must be greater than zero.");
             // This Exception Is From https://www.php.net/manual/en/class.invalidargumentexception.php
         }
-
         $this->amount = $amount;
     }
 
